@@ -6,6 +6,9 @@ let existingCall = null;
 var isReceive = false;    //受信専用かどうか
 const VIDEO_CODEC = 'VP9';
 
+let testStream;
+let capabilities;
+
 //カメラ映像、マイク音声の取得
 function getmedia(video_option) {
     navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false }, video: video_option })
@@ -13,8 +16,8 @@ function getmedia(video_option) {
             // Success
             $('#my-video').get(0).srcObject = stream;
             localStream = stream;
-            let testStream = stream.getVideoTracks();
-            let capabilities = testStream.getCapabilities();
+            testStream = stream.getVideoTracks();
+            capabilities = testStream.getCapabilities();
         }).catch(function (error) {
             // Error
             console.error('mediaDevice.getUserMedia() error:', error);
