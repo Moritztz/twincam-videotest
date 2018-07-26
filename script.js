@@ -13,7 +13,7 @@ function getmedia(video_option) {
             // Success
             $('#my-video').get(0).srcObject = stream;
             localStream = stream;
-            let testStream = localStream.getVideoTracks();
+            let testStream = stream.getVideoTracks();
             let capabilities = testStream.getCapabilities();
         }).catch(function (error) {
             // Error
