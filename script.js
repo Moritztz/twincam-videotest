@@ -45,12 +45,7 @@ $('#LowLow').click(function () {
 });
 
 $('#LowLowLow').click(function () {
-    //getmedia({ width: 240, height: 120, frameRate: { ideal: 5 } });
-    getmedia({
-        "optional": [{ "width": { "max": 240 } },
-            { "height": { "max": 120 } },
-            { "frameRate": { "ideal": 5 } }]
-    });
+    getmedia({ width: 240, height: 120, frameRate: { ideal: 5 } });
 });
 
 //peerid‚ðŽæ“¾
