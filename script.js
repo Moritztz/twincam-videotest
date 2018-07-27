@@ -21,14 +21,12 @@ function getmedia(video_option) {
             //$('#my-video').get(0).srcObject = stream;
             //localStream = stream;
             testStream = stream.getVideoTracks();
-            capabilities = testStream[0].getCapabilities();
-
-            //fjfjghfjhf
-            testStream[0].applyConstraints(video_option);
-            constraints = testStream[0].getConstraints();
-            settings = testStream[0].getSettings();
-
-            stream.addTrack(testStream[0]);
+            capabilities = testStream[0].getCapabilities();    //設定可能な値の範囲
+            testStream[0].applyConstraints(video_option).then(() => {    //値を設定
+                constraints = testStream[0].getConstraints();    //設定した値
+            });
+            settings = testStream[0].getSettings();    //設定された値
+            stream.addTrack(testStream[0]);    //設定した動画を追加
 
             $('#my-video').get(0).srcObject = stream;
             localStream = stream;
