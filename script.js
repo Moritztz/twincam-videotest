@@ -1,9 +1,9 @@
 //'use strict';    //使わなくてもいいや 書き方を厳しくチェックするもの。あるとバグが起きにくくなりやすい。らしい
 
-var localStream = null;
-var peer = null;
+let localStream = null;
+let peer = null;
 let existingCall = null;
-var isReceive = false;    //受信専用かどうか
+let isReceive = false;    //受信専用かどうか
 const VIDEO_CODEC = 'VP9';
 
 let videoTrack;
@@ -18,18 +18,18 @@ function getmedia(video_option) {
     navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false }, video: true })
         .then(function (stream) {
             // Success
-            videoTrack = stream.getVideoTracks()[0];    //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
-            capabilities = videoTrack.getCapabilities();    //設定可能な値の範囲
+            videoTrack = stream.getVideoTracks()[0];           //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
+            capabilities = videoTrack.getCapabilities();       //設定可能な値の範囲
             videoTrack.applyConstraints(video_option)
-                .then(() => {    //値を設定
-                    constraints = videoTrack.getConstraints();    //設定した値
-                    settings = videoTrack.getSettings();    //設定された値
-                    stream.addTrack(videoTrack);    //設定した動画を追加
+                .then(() => {                                  //値を設定
+                    constraints = videoTrack.getConstraints(); //設定した値
+                    settings = videoTrack.getSettings();       //設定された値
+                    stream.addTrack(videoTrack);               //設定した動画を追加
                 }).catch((err) => {
                     console.error('applyConstraints() error:', err);
                 });
-            $('#my-video').get(0).srcObject = stream;       //設定した動画を画面にセット
-            localStream = stream;       //送信用にキープ
+            $('#my-video').get(0).srcObject = stream;          //設定した動画を画面にセット
+            localStream = stream;                              //送信用にキープ
         }).catch(function (error) {
             // Error
             console.error('mediaDevice.getUserMedia() error:', error);
@@ -37,12 +37,11 @@ function getmedia(video_option) {
         });
 }
 
-//4K映像を取得
+//指定した解像度の映像を取得
 $('#4K').click(function () {
     getmedia({ width: { ideal: 3840 }, height: { ideal: 1920 }, frameRate: { ideal: 30 } });
 });
 
-//FullHD映像を取得
 $('#FullHD').click(function () {
     getmedia({ width: { ideal: 1920 }, height: { ideal: 960 }, frameRate: { ideal: 30 } });
 });
@@ -57,6 +56,11 @@ $('#480').click(function () {
 
 $('#240').click(function () {
     getmedia({ width: { ideal: 240 }, height: { ideal: 120 }, frameRate: { ideal: 5 } });
+});
+
+$('#Resolution').submit(function (e) {
+    e.preventDefault();
+    getmedia({ width: { ideal: $('#width').val() }, height: { ideal: $('#height').val() }, frameRate: { ideal: $('#framerate').val() } });
 });
 
 //peeridを取得
