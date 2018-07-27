@@ -19,11 +19,19 @@ function getmedia(video_option) {
         .then(function (stream) {
             // Success
             $('#my-video').get(0).srcObject = stream;
-            localStream = stream;
+            //localStream = stream;
             testStream = stream.getVideoTracks();
             capabilities = testStream[0].getCapabilities();
             constraints = testStream[0].getConstraints();
             settings = testStream[0].getSettings();
+            testStream[0].applyConstraints(video_option)
+                .then((stream) => {
+                    localStream = stream;
+                }).catch((error) => {
+                    // Error
+                     console.error('applyConstraints() error:', error);
+                    return;
+                });
         }).catch(function (error) {
             // Error
             console.error('mediaDevice.getUserMedia() error:', error);
