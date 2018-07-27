@@ -22,9 +22,11 @@ function getmedia(video_option) {
             //localStream = stream;
             testStream = stream.getVideoTracks();
             capabilities = testStream[0].getCapabilities();
+
+
+            testStream[0].applyConstraints(video_option);
             constraints = testStream[0].getConstraints();
             settings = testStream[0].getSettings();
-            testStream[0].applyConstraints(video_option);
 
             stream.addTrack(testStream[0]);
 
