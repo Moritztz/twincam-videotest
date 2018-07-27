@@ -8,16 +8,22 @@ const VIDEO_CODEC = 'VP9';
 
 let testStream;
 let capabilities;
+let constraints;
+let settings;
 
 //カメラ映像、マイク音声の取得
 function getmedia(video_option) {
+    //セットされている自分のビデオを削除
+    $('#my-video').get(0).srcObject = undefined;
     navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false }, video: video_option })
         .then(function (stream) {
             // Success
             $('#my-video').get(0).srcObject = stream;
             localStream = stream;
-            testStream = stream.getVideoTracks(); //a
+            testStream = stream.getVideoTracks();
             capabilities = testStream[0].getCapabilities();
+            constraints = testStream[0].getConstraints();
+            settings = testStream[0].getSettings();
         }).catch(function (error) {
             // Error
             console.error('mediaDevice.getUserMedia() error:', error);
@@ -32,23 +38,23 @@ $('#4K').click(function () {
 
 //FullHD映像を取得
 $('#FullHD').click(function () {
+    getmedia({ width: { ideal: 1920 }, height: { ideal: 960 }, frameRate: { ideal: 30 } });
+});
+
+$('#True').click(function () {
     getmedia(true);
 });
 
-$('#Low').click(function () {
-    getmedia({ width: 960 , height: 480 , frameRate: { ideal: 15 } });
+$('#960').click(function () {
+    getmedia({ width: { ideal: 960 }, height: { ideal: 480 }, frameRate: { ideal: 15 } });
 });
 
-$('#LowLow').click(function () {
-    //getmedia({ width: 480, height: 240, frameRate: { ideal: 15 } });
-    getmedia({
-        "optional": [{ "width": { "max": 480 } },
-        { "height": { "max": 240 } }]
-    });
+$('#480').click(function () {
+    getmedia({ width: { ideal: 480 }, height: { ideal: 240 }, frameRate: { ideal: 10 } });
 });
 
-$('#LowLowLow').click(function () {
-    getmedia({ width: 240, height: 120, frameRate: { ideal: 5 } });
+$('#240').click(function () {
+    getmedia({ width: { ideal: 240 }, height: { ideal: 120 }, frameRate: { ideal: 5 } });
 });
 
 //peeridを取得
