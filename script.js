@@ -47,10 +47,6 @@ $('#FullHD').click(function () {
     getmedia({ width: { ideal: 1920 }, height: { ideal: 960 }, frameRate: { ideal: 30 } });
 });
 
-$('#True').click(function () {
-    getmedia();
-});
-
 $('#960').click(function () {
     getmedia({ width: { ideal: 960 }, height: { ideal: 480 }, frameRate: { ideal: 15 } });
 });
