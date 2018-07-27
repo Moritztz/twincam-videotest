@@ -11,6 +11,13 @@ let capabilities;
 let constraints;
 let settings;
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('test').addEventListener('click', function () {
+        chrome.tabs.update({ url: 'chrome://webrtc-internals/' });
+    });
+});
+
 //カメラ映像、マイク音声の取得
 function getmedia(video_option) {
     //セットされている自分のビデオを削除
