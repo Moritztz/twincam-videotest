@@ -48,7 +48,7 @@ $('#FullHD').click(function () {
 });
 
 $('#True').click(function () {
-    getmedia(true);
+    getmedia();
 });
 
 $('#960').click(function () {
