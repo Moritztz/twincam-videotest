@@ -6,7 +6,7 @@ let existingCall = null;
 var isReceive = false;    //受信専用かどうか
 const VIDEO_CODEC = 'VP9';
 
-let testStream;
+let videoTrack;
 let capabilities;
 let constraints;
 let settings;
@@ -18,18 +18,18 @@ function getmedia(video_option) {
     navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false }, video: true })
         .then(function (stream) {
             // Success
-            //$('#my-video').get(0).srcObject = stream;
-            //localStream = stream;
-            testStream = stream.getVideoTracks();
-            capabilities = testStream[0].getCapabilities();    //設定可能な値の範囲
-            testStream[0].applyConstraints(video_option).then(() => {    //値を設定
-                constraints = testStream[0].getConstraints();    //設定した値
-            });
-            settings = testStream[0].getSettings();    //設定された値
-            stream.addTrack(testStream[0]);    //設定した動画を追加
-
-            $('#my-video').get(0).srcObject = stream;
-            localStream = stream;
+            videoTrack = stream.getVideoTracks()[0];    //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
+            capabilities = videoTrack.getCapabilities();    //設定可能な値の範囲
+            videoTrack.applyConstraints(video_option)
+                .then(() => {    //値を設定
+                    constraints = videoTrack.getConstraints();    //設定した値
+                    settings = videoTrack.getSettings();    //設定された値
+                    stream.addTrack(videoTrack);    //設定した動画を追加
+                }).catch((err) => {
+                    console.error('applyConstraints() error:', err);
+                });
+            $('#my-video').get(0).srcObject = stream;       //設定した動画を画面にセット
+            localStream = stream;       //送信用にキープ
         }).catch(function (error) {
             // Error
             console.error('mediaDevice.getUserMedia() error:', error);
