@@ -15,7 +15,7 @@ let settings;
 function getmedia(video_option) {
     //セットされている自分のビデオを削除
     $('#my-video').get(0).srcObject = undefined;
-    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false }, video: video_option })
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false }, video: true })
         .then(function (stream) {
             // Success
             //$('#my-video').get(0).srcObject = stream;
