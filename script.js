@@ -1,4 +1,4 @@
-//'use strict';    //使わなくてもいいや 書き方を厳しくチェックするもの。あるとバグが起きにくくなりやすい。らしい
+﻿//'use strict';    //使わなくてもいいや 書き方を厳しくチェックするもの。あるとバグが起きにくくなりやすい。らしい
 
 let localStream = null;
 let peer = null;
@@ -7,7 +7,7 @@ let isReceive = false;    //受信専用かどうか
 const VIDEO_CODEC = 'VP9';
 
 let videoTrack;
-//let capabilities;  //Firefoxで動作しないためコメントアウト
+let capabilities;
 let constraints;
 let settings;
 
@@ -19,7 +19,7 @@ function getmedia(wid, hei, fra) {    //引数は(幅,高さ,fps)
         .then(function (stream) {
             // Success
             videoTrack = stream.getVideoTracks()[0];           //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
-            //capabilities = videoTrack.getCapabilities();       //設定可能な値の範囲
+            capabilities = videoTrack.getCapabilities();       //設定可能な値の範囲
             videoTrack.applyConstraints({ width: { ideal: wid }, height: { ideal: hei }, frameRate: { ideal: fra } })
                 .then(() => {                                  //値を設定
                     constraints = videoTrack.getConstraints(); //設定した値
