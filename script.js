@@ -222,19 +222,22 @@ function start() {
 
     //errorイベント
     peer.on('error', function (err) {
-        alert(err.message);
+        //alert(err.message);
+        $('#console').text(err.message);
         setupMakeCallUI();
     });
 
     //closeイベント
     peer.on('close', function () {
-        alert(err.message);
+        //alert(err.message);
+        $('#console').text(err.message);
         setupMakeCallUI();
     });
 
     //disconnectedイベント
     peer.on('disconnected', function () {
-        alert(err.message);
+        //alert(err.message);
+        $('#console').text(err.message);
         setupMakeCallUI();
     });
 
