@@ -6,6 +6,8 @@ let existingCall = null;
 let isReceive = false;    //受信専用かどうか
 let VIDEO_CODEC = 'VP9';
 
+let mediaRecorder;
+
 let videoTrack;
 let capabilities;
 let constraints;
@@ -190,6 +192,27 @@ $('#recieve').click(function () {
 $('#random').click(function () {
     setCallOption(true, 'VP9');
     getpeerid();
+});
+
+//Recordボタン
+$('#localrecstart').click(function () {
+    if (localStream != null) {
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.start();
+        $('#console').text("recorder started");
+    }
+});
+
+$('#localrecstop').click(function () {
+    mediaRecorder.ondataavailable = function (e) {
+        $('#console').text("data available after MediaRecorder.stop() called.");
+
+        let audio = document.createElement('audio');
+        audio.setAttribute('controls', '');
+        let audioURL = window.URL.createObjectURL(e.data);
+        audio.src = audioURL;
+    }
 });
 
 //reloadボタン
