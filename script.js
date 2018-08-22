@@ -209,13 +209,14 @@ $('#recstart').click(function () {
 $('#recstop').click(function () {
     if (mediaRecorder != null) {
         mediaRecorder.stop();
+        $('#console').text("recorder stopped");
     }
     mediaRecorder.ondataavailable = function (e) {
         videoBrob = new Blob([e.data], { type: e.data.type });
-
+        blobUrl = window.URL.createObjectURL(videoBrob);
         $('#downloadlink').text = 'Download';
         $('#downloadlink').download = 'recorded.webm';
-        $('#downloadlink').href = window.URL.createObjectURL(videoBrob);
+        $('#downloadlink').href = blobUrl
     }
 });
 
