@@ -7,6 +7,7 @@ let isReceive = false;    //受信専用かどうか
 let VIDEO_CODEC = 'VP9';
 
 let mediaRecorder;
+let rcvStream;
 
 let videoTrack;
 let capabilities;
@@ -195,7 +196,7 @@ $('#random').click(function () {
 });
 
 //Recordボタン
-$('#localrecstart').click(function () {
+$('#recstart').click(function () {
     if (localStream != null) {
         mediaRecorder = new MediaRecorder(localStream);
 
@@ -204,9 +205,13 @@ $('#localrecstart').click(function () {
     }
 });
 
-$('#localrecstop').click(function () {
+$('#recstop').click(function () {
+    if (mediaRecorder != null) {
+        mediaRecorder.stop();
+    }
     mediaRecorder.ondataavailable = function (e) {
         $('#console').text("data available after MediaRecorder.stop() called.");
+
 
         let audio = document.createElement('audio');
         audio.setAttribute('controls', '');
@@ -293,6 +298,7 @@ function setupCallEventHandlers(call) {
 
 //video要素の再生
 function addVideo(call, stream) {
+    rcvStream = stream;
     $('#their-video').get(0).srcObject = stream;
 }
 
