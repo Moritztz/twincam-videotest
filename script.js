@@ -8,6 +8,7 @@ let VIDEO_CODEC = 'VP9';
 
 let mediaRecorder;
 let rcvStream;
+let videoBrob;
 
 let videoTrack;
 let capabilities;
@@ -210,13 +211,11 @@ $('#recstop').click(function () {
         mediaRecorder.stop();
     }
     mediaRecorder.ondataavailable = function (e) {
-        $('#console').text("data available after MediaRecorder.stop() called.");
+        videoBrob = new Blob([e.data], { type: e.data.type });
 
-
-        let audio = document.createElement('audio');
-        audio.setAttribute('controls', '');
-        let audioURL = window.URL.createObjectURL(e.data);
-        audio.src = audioURL;
+        $('#downloadlink').text = 'Download';
+        $('#downloadlink').download = 'recorded.webm';
+        $('#downloadlink').href = window.URL.createObjectURL(videoBrob);
     }
 });
 
