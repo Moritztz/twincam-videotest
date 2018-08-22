@@ -197,7 +197,7 @@ $('#random').click(function () {
 //Recordボタン
 $('#localrecstart').click(function () {
     if (localStream != null) {
-        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder = new MediaRecorder(localStream);
 
         mediaRecorder.start();
         $('#console').text("recorder started");
