@@ -4,7 +4,7 @@ let localStream = null;
 let peer = null;
 let existingCall = null;
 let isReceive = false;    //受信専用かどうか
-let VIDEO_CODEC = 'VP8';
+let VIDEO_CODEC;
 
 let mediaRecorder = null;
 let rcvStream = null;
@@ -100,73 +100,73 @@ function setCallOption(recieve, videoCodec) {
 
 //peeridの選択
 $('#twincam1').click(function () {
-    setCallOption(false, 'VP9');
+    setCallOption(false, 'VP8');
     getpeerid("tc1");
     $('#callto-id').val("user1");
 });
 
 $('#twincam2').click(function () {
-    setCallOption(false, 'VP9');
+    setCallOption(false, 'VP8');
     getpeerid("tc2");
     $('#callto-id').val("user2");
 });
 
 $('#twincam3').click(function () {
-    setCallOption(false, 'VP9');
+    setCallOption(false, 'VP8');
     getpeerid("tc3");
     $('#callto-id').val("user3");
 });
 
 $('#twincam4').click(function () {
-    setCallOption(false, 'VP9');
+    setCallOption(false, 'VP8');
     getpeerid("tc4");
     $('#callto-id').val("user4");
 });
 
 $('#twincam5').click(function () {
-    setCallOption(false, 'VP9');
+    setCallOption(false, 'VP8');
     getpeerid("tc5");
     $('#callto-id').val("user5");
 });
 
 $('#twincam6').click(function () {
-    setCallOption(false, 'VP9');
+    setCallOption(false, 'VP8');
     getpeerid("tc6");
     $('#callto-id').val("user6");
 });
 
 $('#user1').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid("user1");
     $('#callto-id').val("tc1");
 });
 
 $('#user2').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid("user2");
     $('#callto-id').val("tc2");
 });
 
 $('#user3').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid("user3");
     $('#callto-id').val("tc3");
 });
 
 $('#user4').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid("user4");
     $('#callto-id').val("tc4");
 });
 
 $('#user5').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid("user5");
     $('#callto-id').val("tc5");
 });
 
 $('#user6').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid("user6");
     $('#callto-id').val("tc6");
 });
@@ -185,13 +185,13 @@ $('#videou').click(function () {
 });
 
 $('#recieve').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid();
     $('#callto-id').val("tc");
 });
 
 $('#random').click(function () {
-    setCallOption(true, 'VP9');
+    setCallOption(true, 'VP8');
     getpeerid();
 });
 
