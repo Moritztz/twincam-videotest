@@ -4,7 +4,7 @@ let localStream = null;
 let peer = null;
 let existingCall = null;
 let isReceive = false;    //受信専用かどうか
-let VIDEO_CODEC;
+let VIDEO_CODEC = 'H264';
 
 let mediaRecorder = null;
 let rcvStream = null;
@@ -94,7 +94,7 @@ function getpeerid(id) {
 function setCallOption(recieve, videoCodec) {
     isReceive = recieve;
     $('#isrcv').text(isReceive);
-    VIDEO_CODEC = videoCodec;
+    //VIDEO_CODEC = videoCodec;
     $('#videocod').text(VIDEO_CODEC);
 }
 
