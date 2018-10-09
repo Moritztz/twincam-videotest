@@ -21,20 +21,20 @@ function getmedia(wid, hei, fra) {    //引数は(幅,高さ,fps)
     navigator.mediaDevices.getUserMedia({ audio: false, video: true })//KKO
         .then(function (stream) {
             // Success
-            videoTrack = stream.getVideoTracks()[0];           //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
+            //videoTrack = stream.getVideoTracks()[0];           //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
             //capabilities = videoTrack.getCapabilities();       //設定可能な値の範囲
-            videoTrack.applyConstraints({ width: { ideal: wid }, height: { ideal: hei }, frameRate: { ideal: fra } })
-                .then(() => {                                  //値を設定
-                    constraints = videoTrack.getConstraints(); //設定した値
-                    settings = videoTrack.getSettings();       //設定された値
-                    $('#width').val(settings.width);                  //今の解像度をresolutionのformに表示
-                    $('#height').val(settings.height);
-                    $('#framerate').val(settings.frameRate);
-                    stream.addTrack(videoTrack);               //設定した動画を追加
-                }).catch((err) => {
-                    console.error('applyConstraints() error:', err);
-                    $('#console').text('applyConstraints() error:' + err);
-                });
+            //videoTrack.applyConstraints({ width: { ideal: wid }, height: { ideal: hei }, frameRate: { ideal: fra } })
+            //    .then(() => {                                  //値を設定
+            //        constraints = videoTrack.getConstraints(); //設定した値
+            //        settings = videoTrack.getSettings();       //設定された値
+            //        $('#width').val(settings.width);                  //今の解像度をresolutionのformに表示
+            //        $('#height').val(settings.height);
+            //        $('#framerate').val(settings.frameRate);
+            //        stream.addTrack(videoTrack);               //設定した動画を追加
+            //    }).catch((err) => {
+            //        console.error('applyConstraints() error:', err);
+            //        $('#console').text('applyConstraints() error:' + err);
+            //    });
             $('#my-video').get(0).srcObject = stream;          //設定した動画を画面にセット
             localStream = stream;                              //送信用にキープ
         }).catch(function (error) {
