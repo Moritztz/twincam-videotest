@@ -18,7 +18,7 @@ let settings;
 function getmedia(wid, hei, fra) {    //引数は(幅,高さ,fps)
     //セットされている自分のビデオを削除
     $('#my-video').get(0).srcObject = undefined;
-    navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+    navigator.mediaDevices.getUserMedia({ audio: false, video: true })//KKO
         .then(function (stream) {
             // Success
             videoTrack = stream.getVideoTracks()[0];           //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
