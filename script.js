@@ -4,7 +4,7 @@ let localStream = null;
 let peer = null;
 let existingCall = null;
 let isReceive = false;    //受信専用かどうか
-let VIDEO_CODEC = 'VP8';
+let VIDEO_CODEC = 'H264';
 
 let mediaRecorder = null;
 let rcvStream = null;
