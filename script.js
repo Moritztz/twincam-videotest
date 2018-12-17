@@ -4,7 +4,8 @@ let localStream = null;
 let peer = null;
 let existingCall = null;
 let isReceive = false;    //受信専用かどうか
-let VIDEO_CODEC = 'H264';
+let MAIN_VIDEO_CODEC = 'VP9';
+let vidCodec = null;
 
 let mediaRecorder = null;
 let rcvStream = null;
@@ -18,7 +19,7 @@ let settings;
 function getmedia(wid, hei, fra) {    //引数は(幅,高さ,fps)
     //セットされている自分のビデオを削除
     $('#my-video').get(0).srcObject = undefined;
-    navigator.mediaDevices.getUserMedia({ audio: false, video: true })//KKO
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false }, video: true })
         .then(function (stream) {
             // Success
             videoTrack = stream.getVideoTracks()[0];           //MediaStreamから[0]番目のVideoのMediaStreamTrackを取得
@@ -91,84 +92,96 @@ function getpeerid(id) {
 }
 
 //送受信の設定
-function setCallOption(recieve, videoCodec) {
+function setCallOption(recieve, vCod) {
     isReceive = recieve;
     $('#isrcv').text(isReceive);
-    //VIDEO_CODEC = videoCodec;
-    $('#videocod').text(VIDEO_CODEC);
+    vidCodec = vCod;
+    $('#videocod').text(vidCodec);
 }
 
 //peeridの選択
 $('#twincam1').click(function () {
-    setCallOption(false, 'VP8');
+    setCallOption(false, MAIN_VIDEO_CODEC);
     getpeerid("tc1");
     $('#callto-id').val("user1");
 });
 
 $('#twincam2').click(function () {
-    setCallOption(false, 'VP8');
+    setCallOption(false, MAIN_VIDEO_CODEC);
     getpeerid("tc2");
     $('#callto-id').val("user2");
 });
 
 $('#twincam3').click(function () {
-    setCallOption(false, 'VP8');
+    setCallOption(false, MAIN_VIDEO_CODEC);
     getpeerid("tc3");
     $('#callto-id').val("user3");
 });
 
 $('#twincam4').click(function () {
-    setCallOption(false, 'VP8');
+    setCallOption(false, MAIN_VIDEO_CODEC);
     getpeerid("tc4");
     $('#callto-id').val("user4");
 });
 
 $('#twincam5').click(function () {
-    setCallOption(false, 'VP8');
+    setCallOption(false, MAIN_VIDEO_CODEC);
     getpeerid("tc5");
     $('#callto-id').val("user5");
 });
 
 $('#twincam6').click(function () {
-    setCallOption(false, 'VP8');
+    setCallOption(false, MAIN_VIDEO_CODEC);
     getpeerid("tc6");
     $('#callto-id').val("user6");
 });
 
 $('#user1').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid("user1");
     $('#callto-id').val("tc1");
 });
 
 $('#user2').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid("user2");
     $('#callto-id').val("tc2");
 });
 
 $('#user3').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid("user3");
     $('#callto-id').val("tc3");
 });
 
 $('#user4').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid("user4");
     $('#callto-id').val("tc4");
 });
 
 $('#user5').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid("user5");
     $('#callto-id').val("tc5");
 });
 
 $('#user6').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid("user6");
     $('#callto-id').val("tc6");
+});
+
+$('#ln1').click(function () {
+    setCallOption(true, MAIN_VIDEO_CODEC);
+    getpeerid("ln1");
+    $('#callto-id').val("ALR1");
+});
+
+$('#ln2').click(function () {
+    setCallOption(true, MAIN_VIDEO_CODEC);
+    getpeerid("ln2");
+    $('#callto-id').val("ALR2");
 });
 
 $('#videot').click(function () {
@@ -185,13 +198,13 @@ $('#videou').click(function () {
 });
 
 $('#recieve').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid();
     $('#callto-id').val("tc");
 });
 
 $('#random').click(function () {
-    setCallOption(true, 'VP8');
+    setCallOption(true, MAIN_VIDEO_CODEC);
     getpeerid();
 });
 
@@ -236,7 +249,7 @@ $('#reload').click(function () {
 $('#make-call').submit(function (e) {
     e.preventDefault();
     const call = peer.call($('#callto-id').val(), localStream, {
-        videoCodec: VIDEO_CODEC,
+        videoCodec: vidCodec,
         videoReceiveEnabled: isReceive,
         audioReceiveEnabled: isReceive,
     });
@@ -278,7 +291,7 @@ function start() {
 
     //着信処理
     peer.on('call', function (call) {
-        call.answer(localStream, { videoCodec: VIDEO_CODEC });
+        call.answer(localStream, { videoCodec: vidCodec });
         setupCallEventHandlers(call);
     });
 }
