@@ -397,8 +397,8 @@ async function getRTCStats(statsObject) {
         }
     });
 
-    $('#local-video').text('frameHeight:' + mediaStreamTrack_local_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + '<BR>framesSent:' + mediaStreamTrack_local_videoArray[0].framesSent);
-    $('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + '<BR>framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesReceived);
+    $('#local-video').text('frameHeight:' + mediaStreamTrack_local_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + '<BR>framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
+    $('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + '<BR>framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
 }
 
 //reloadボタン
