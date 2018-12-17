@@ -222,30 +222,43 @@ $('#rcvrecstart').click(function () {
 });
 
 function recStart(stream) {
-    if (stream != null) {
-        mediaRecorder = new MediaRecorder(stream); //録画用のインスタンス作成
-        // 一定間隔で録画が区切られて、データが渡される
-        mediaRecorder.ondataavailable = function(evt) {
-            chunks.push(evt.data);
-            dataType = evt.data.type;
-        }
-        mediaRecorder.start(1000); //録画開始 1000ms 毎に録画データを区切る
-        $('#console').text("recieved video recorder started");
+    //チェック
+    if (!stream) {
+        $('#console').text("stream not ready");
+        return;
     }
-}
+    if (mediaRecorder) {
+        $('#console').text("already recording");
+        return;
+    }
 
-$('#recstop').click(function () {
-    if (mediaRecorder != null) {
-        mediaRecorder.stop();                        //録画停止
-        $('#console').text("recorder stopped");
+    mediaRecorder = new MediaRecorder(stream); //録画用のインスタンス作成
+    chunks = [];                               //格納場所をクリア
+
+    // 一定間隔で録画が区切られて、データが渡される
+    mediaRecorder.ondataavailable = function(evt) {
+        chunks.push(evt.data);
+        dataType = evt.data.type;
     }
-    mediaRecorder.onstop = function (e) {
+
+    //録画停止時のイベント
+    mediaRecorder.onstop = function (evt) {
         //保存用URLの生成
-        let videoBrob = new Blob([e.data], { type: dataType });
+        let videoBrob = new Blob(chunks, { type: dataType });
         let anchor = $('#downloadlink').get(0);
         anchor.text = 'Download';
         anchor.download = 'recorded.webm';
         anchor.href = window.URL.createObjectURL(videoBrob);
+    }
+
+    mediaRecorder.start(1000); //録画開始 1000ms 毎に録画データを区切る
+    $('#console').text("video recorder started");
+}
+
+$('#recstop').click(function () {
+    if (mediaRecorder) {
+        mediaRecorder.stop();   //録画停止
+        $('#console').text("recorder stopped");
     }
 });
 
