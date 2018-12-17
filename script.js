@@ -415,20 +415,20 @@ async function getRTCStats(statsObject) {
     //    } else if (mediaStreamTrack.kind === 'video') {
     //        mediaStreamTrack_remote_videoArray.push(mediaStreamTrack)
     //    }
-    });
+    //});
 
     //$('#local-video').text('frameHeight:' + mediaStreamTrack_local_videoArray[0].frameHeight + ' frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + ' framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
     //$('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + ' frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + ' framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
-    $('#local-video').text('frameHeight:' + hogeArray[0]. + ' frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + ' framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
-    $('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + ' frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + ' framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
+    //$('#local-video').text('frameHeight:' + hogeArray[0]. + ' frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + ' framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
+    //$('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + ' frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + ' framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
 
-    data_csv += statsCount * STATS_INTERVAL + ','
-        + mediaStreamTrack_local_videoArray[0].frameHeight + ','
-        + mediaStreamTrack_local_videoArray[0].frameWidth + ','
-        + mediaStreamTrack_local_videoArray[0].framesPerSecond + ','
-        + mediaStreamTrack_remote_videoArray[0].frameHeight + ','
-        + mediaStreamTrack_remote_videoArray[0].frameWidth + ','
-        + mediaStreamTrack_remote_videoArray[0].framesPerSecond + "\n";
+    //data_csv += statsCount * STATS_INTERVAL + ','
+    //    + mediaStreamTrack_local_videoArray[0].frameHeight + ','
+    //    + mediaStreamTrack_local_videoArray[0].frameWidth + ','
+    //    + mediaStreamTrack_local_videoArray[0].framesPerSecond + ','
+    //    + mediaStreamTrack_remote_videoArray[0].frameHeight + ','
+    //    + mediaStreamTrack_remote_videoArray[0].frameWidth + ','
+    //    + mediaStreamTrack_remote_videoArray[0].framesPerSecond + "\n";
 
     statsCount++;
 }
