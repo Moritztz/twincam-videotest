@@ -10,6 +10,7 @@ let vidCodec = null;
 let mediaRecorder = null;
 let chunks = [];    // 録画でデータを保持する
 let rcvStream = null;
+let dataType = null;
 
 let timer;
 
@@ -226,6 +227,7 @@ function recStart(stream) {
         // 一定間隔で録画が区切られて、データが渡される
         mediaRecorder.ondataavailable = function(evt) {
             chunks.push(evt.data);
+            dataType = evt.data.type;
         }
         mediaRecorder.start(1000); //録画開始 1000ms 毎に録画データを区切る
         $('#console').text("recieved video recorder started");
@@ -233,17 +235,17 @@ function recStart(stream) {
 }
 
 $('#recstop').click(function () {
+    if (mediaRecorder != null) {
+        mediaRecorder.stop();                        //録画停止
+        $('#console').text("recorder stopped");
+    }
     mediaRecorder.onstop = function (e) {
         //保存用URLの生成
-        let videoBrob = new Blob([e.data], { type: e.data.type });
+        let videoBrob = new Blob([e.data], { type: dataType });
         let anchor = $('#downloadlink').get(0);
         anchor.text = 'Download';
         anchor.download = 'recorded.webm';
         anchor.href = window.URL.createObjectURL(videoBrob);
-    }
-    if (mediaRecorder != null) {
-        mediaRecorder.stop();                        //録画停止
-        $('#console').text("recorder stopped");
     }
 });
 
