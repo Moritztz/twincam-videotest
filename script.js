@@ -299,12 +299,12 @@ async function getRTCStats(statsObject) {
     //let outboundRTPAudioStreamArray = [];
     //let outboundRTPVideoStreamArray = [];
     //let codecArray = [];
-    let mediaStreamTrack_senderArray = [];
-    let mediaStreamTrack_receiverArray = [];
+    //let mediaStreamTrack_senderArray = [];
+    //let mediaStreamTrack_receiverArray = [];
     //let mediaStreamTrack_local_audioArray = []
     //let mediaStreamTrack_remote_audioArray = []
-    let mediaStreamTrack_local_videoArray = []
-    let mediaStreamTrack_remote_videoArray = []
+    //let mediaStreamTrack_local_videoArray = []
+    //let mediaStreamTrack_remote_videoArray = []
     //let candidatePairId = '';
     //let localCandidateId = '';
     //let remoteCandidateId = '';
@@ -314,6 +314,7 @@ async function getRTCStats(statsObject) {
     //let inboundVideoCodec = {};
     //let outboundAudioCode = {};
     //let outboundVideoCode = {};
+    let hogeArray = {};
 
     let stats = await statsObject;
     stats.forEach(stat => {
@@ -338,15 +339,19 @@ async function getRTCStats(statsObject) {
         //if (stat.id.indexOf('RTCOutboundRTPVideoStream') !== -1) {
         //    outboundRTPVideoStreamArray.push(stat);
         //}
-        if (stat.id.indexOf('RTCMediaStreamTrack_sender') !== -1) {
-            mediaStreamTrack_senderArray.push(stat);
-        }
-        if (stat.id.indexOf('RTCMediaStreamTrack_receiver') !== -1) {
-            mediaStreamTrack_receiverArray.push(stat);
-        }
+        //if (stat.id.indexOf('RTCMediaStreamTrack_sender') !== -1) {
+        //    mediaStreamTrack_senderArray.push(stat);
+        //}
+        //if (stat.id.indexOf('RTCMediaStreamTrack_receiver') !== -1) {
+        //    mediaStreamTrack_receiverArray.push(stat);
+        //}
         //if (stat.id.indexOf('RTCCodec') !== -1) {
         //    codecArray.push(stat);
         //}
+
+        if (stat.type.indexOf('ssrc') !== -1) {
+            hogeArray.push(stat);
+        }
     });
 
     //trasportArray.forEach(transport => {
@@ -397,23 +402,25 @@ async function getRTCStats(statsObject) {
     //        }
     //    });
     //});
-    mediaStreamTrack_senderArray.forEach(mediaStreamTrack => {
-        if (mediaStreamTrack.kind === 'audio') {
-            //mediaStreamTrack_local_audioArray.push(mediaStreamTrack)
-        } else if (mediaStreamTrack.kind === 'video') {
-            mediaStreamTrack_local_videoArray.push(mediaStreamTrack)
-        }
-    });
-    mediaStreamTrack_receiverArray.forEach(mediaStreamTrack => {
-        if (mediaStreamTrack.kind === 'audio') {
-            //mediaStreamTrack_remote_audioArray.push(mediaStreamTrack)
-        } else if (mediaStreamTrack.kind === 'video') {
-            mediaStreamTrack_remote_videoArray.push(mediaStreamTrack)
-        }
+    //mediaStreamTrack_senderArray.forEach(mediaStreamTrack => {
+    //    if (mediaStreamTrack.kind === 'audio') {
+    //        //mediaStreamTrack_local_audioArray.push(mediaStreamTrack)
+    //    } else if (mediaStreamTrack.kind === 'video') {
+    //        mediaStreamTrack_local_videoArray.push(mediaStreamTrack)
+    //    }
+    //});
+    //mediaStreamTrack_receiverArray.forEach(mediaStreamTrack => {
+    //    if (mediaStreamTrack.kind === 'audio') {
+    //        //mediaStreamTrack_remote_audioArray.push(mediaStreamTrack)
+    //    } else if (mediaStreamTrack.kind === 'video') {
+    //        mediaStreamTrack_remote_videoArray.push(mediaStreamTrack)
+    //    }
     });
 
-    $('#local-video').text('frameHeight:' + mediaStreamTrack_local_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + '<BR>framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
-    $('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + '<BR>framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
+    //$('#local-video').text('frameHeight:' + mediaStreamTrack_local_videoArray[0].frameHeight + ' frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + ' framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
+    //$('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + ' frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + ' framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
+    $('#local-video').text('frameHeight:' + hogeArray[0]. + ' frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + ' framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
+    $('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + ' frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + ' framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
 
     data_csv += statsCount * STATS_INTERVAL + ','
         + mediaStreamTrack_local_videoArray[0].frameHeight + ','
@@ -421,8 +428,7 @@ async function getRTCStats(statsObject) {
         + mediaStreamTrack_local_videoArray[0].framesPerSecond + ','
         + mediaStreamTrack_remote_videoArray[0].frameHeight + ','
         + mediaStreamTrack_remote_videoArray[0].frameWidth + ','
-        + mediaStreamTrack_remote_videoArray[0].framesPerSecond + ','
-        + "\n";
+        + mediaStreamTrack_remote_videoArray[0].framesPerSecond + "\n";
 
     statsCount++;
 }
