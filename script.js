@@ -4,7 +4,7 @@ let localStream = null;
 let peer = null;
 let existingCall = null;
 let isReceive = false;    //受信専用かどうか
-let MAIN_VIDEO_CODEC = 'VP9';
+const MAIN_VIDEO_CODEC = 'VP9';
 let vidCodec = null;
 
 let mediaRecorder = null;
@@ -12,7 +12,10 @@ let chunks = [];    // 録画でデータを保持する
 let rcvStream = null;
 let dataType = null;
 
+const STATS_INTERVAL = 1000;    //Statsを保存する間隔 ms
+let statsCount = 0;
 let timer;
+let data_csv = "";
 
 let videoTrack;
 let capabilities;
@@ -245,8 +248,8 @@ function recStart(stream) {
     mediaRecorder.onstop = function (evt) {
         //保存用URLの生成
         let videoBrob = new Blob(chunks, { type: dataType });
-        let anchor = $('#downloadlink').get(0);
-        anchor.text = 'Download';
+        let anchor = $('#downloadlink-video').get(0);
+        anchor.text = 'Download Record';
         anchor.download = 'recorded.webm';
         anchor.href = window.URL.createObjectURL(videoBrob);
         mediaRecorder = null;
@@ -256,6 +259,7 @@ function recStart(stream) {
     $('#console').text("video recorder started");
 }
 
+//録画停止
 $('#recstop').click(function () {
     if (mediaRecorder) {
         mediaRecorder.stop();   //録画停止
@@ -265,13 +269,24 @@ $('#recstop').click(function () {
 
 //Statsボタン
 $('#getting-stats').on('click', () => {
+    //setIntervalでSTATS_INTERVALで指定した間隔でgetRTCStatsを実行する
     timer = setInterval(() => {
         getRTCStats(existingCall._negotiator._pc.getStats())
-    }, 1000);
+    }, STATS_INTERVAL);
 });
 
 $('#stop-acquiring-stats').on('click', () => {
     clearInterval(timer);
+
+    let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);                       //文字コードをBOM付きUTF-8に指定
+    let statsBrob = new blob([bom, data_csv], { "type": "text/csv" });  //data_csvのデータをcsvとしてダウンロードする関数
+    let anchor = $('#downloadlink-stats').get(0);
+    anchor.text = 'Download Stats';
+    anchor.download = 'stats.csv';
+    anchor.href = window.URL.createObjectURL(statsBrob);
+    //初期化
+    data_csv = "";
+    statsCount = 0;
 });
 
 async function getRTCStats(statsObject) {
@@ -399,6 +414,17 @@ async function getRTCStats(statsObject) {
 
     $('#local-video').text('frameHeight:' + mediaStreamTrack_local_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth + '<BR>framesSent:' + mediaStreamTrack_local_videoArray[0].framesPerSecond);
     $('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight + '<BR>frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth + '<BR>framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesPerSecond);
+
+    data_csv += statsCount * STATS_INTERVAL + ','
+        + mediaStreamTrack_local_videoArray[0].frameHeight + ','
+        + mediaStreamTrack_local_videoArray[0].frameWidth + ','
+        + mediaStreamTrack_local_videoArray[0].framesPerSecond + ','
+        + mediaStreamTrack_remote_videoArray[0].frameHeight + ','
+        + mediaStreamTrack_remote_videoArray[0].frameWidth + ','
+        + mediaStreamTrack_remote_videoArray[0].framesPerSecond + ','
+        + "\n";
+
+    statsCount++;
 }
 
 //reloadボタン
