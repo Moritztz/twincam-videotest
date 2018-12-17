@@ -249,6 +249,7 @@ function recStart(stream) {
         anchor.text = 'Download';
         anchor.download = 'recorded.webm';
         anchor.href = window.URL.createObjectURL(videoBrob);
+        mediaRecorder = null;
     }
 
     mediaRecorder.start(1000); //録画開始 1000ms 毎に録画データを区切る
