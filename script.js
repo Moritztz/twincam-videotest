@@ -315,24 +315,24 @@ async function getRTCStats(statsObject) {
     //let outboundAudioCode = {};
     //let outboundVideoCode = {};
 
-    let stats = await statsObject;
+    ////let stats = await statsObject;
 
-    var rtcStatsReports = stats.result();
-    var reportCount = rtcStatsReports.length;
-    var reportIndex;
-    for (reportIndex = 0; reportIndex < reportCount; reportIndex++) {
-        var report = rtcStatsReports[reportIndex];
-        var line = 'type=' + report.type + ' ';
-        var names = report.names();
-        var nameIndex;
-        for (nameIndex = 0; nameIndex < names.length; nameIndex++) {
-            var name = names[nameIndex];
-            var statValue = report.stat(name);
-            line += (name + ':' + statValue + ', ');
-        }
-        //console.log(line);
-        $('#local-video').text(line);
-    }
+    ////var rtcStatsReports = stats.result();
+    ////var reportCount = rtcStatsReports.length;
+    ////var reportIndex;
+    ////for (reportIndex = 0; reportIndex < reportCount; reportIndex++) {
+    ////    var report = rtcStatsReports[reportIndex];
+    ////    var line = 'type=' + report.type + ' ';
+    ////    var names = report.names();
+    ////    var nameIndex;
+    ////    for (nameIndex = 0; nameIndex < names.length; nameIndex++) {
+    ////        var name = names[nameIndex];
+    ////        var statValue = report.stat(name);
+    ////        line += (name + ':' + statValue + ', ');
+    ////    }
+    ////    //console.log(line);
+    ////    $('#local-video').text(line);
+    ////}
 //});
     //stats.forEach(stat => {
     //if (stat.id.indexOf('RTCTransport') !== -1) {
