@@ -333,7 +333,7 @@ async function getRTCStats(statsObject) {
         //console.log(line);
         $('#local-video').text(line);
     }
-});
+//});
     //stats.forEach(stat => {
     //if (stat.id.indexOf('RTCTransport') !== -1) {
     //    trasportArray.push(stat);
