@@ -8,6 +8,7 @@ let MAIN_VIDEO_CODEC = 'VP9';
 let vidCodec = null;
 
 let mediaRecorder = null;
+let chunks = [];    // 録画でデータを保持する
 let rcvStream = null;
 
 let videoTrack;
@@ -28,7 +29,7 @@ function getmedia(wid, hei, fra) {    //引数は(幅,高さ,fps)
                 .then(() => {                                  //値を設定
                     constraints = videoTrack.getConstraints(); //設定した値
                     settings = videoTrack.getSettings();       //設定された値
-                    $('#width').val(settings.width);                  //今の解像度をresolutionのformに表示
+                    $('#width').val(settings.width);           //今の解像度をresolutionのformに表示
                     $('#height').val(settings.height);
                     $('#framerate').val(settings.frameRate);
                     stream.addTrack(videoTrack);               //設定した動画を追加
@@ -220,7 +221,13 @@ $('#rcvrecstart').click(function () {
 function recStart(stream) {
     if (stream != null) {
         mediaRecorder = new MediaRecorder(stream); //録画用のインスタンス作成
-        mediaRecorder.start(); //録画開始
+
+        // 一定間隔で録画が区切られて、データが渡される
+        mediaRecorder.ondataavailable = function(evt) {
+            chunks.push(evt.data);
+        }
+
+        mediaRecorder.start(1000); //録画開始 1000ms 毎に録画データを区切る
         $('#console').text("recieved video recorder started");
     }
 }
@@ -230,7 +237,7 @@ $('#recstop').click(function () {
         mediaRecorder.stop();                        //録画停止
         $('#console').text("recorder stopped");
     }
-    mediaRecorder.ondataavailable = function (e) {
+    mediaRecorder.onstop = function (e) {
         //保存用URLの生成
         let videoBrob = new Blob([e.data], { type: e.data.type });
         let anchor = $('#downloadlink').get(0);
