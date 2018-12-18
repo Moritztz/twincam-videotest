@@ -411,12 +411,24 @@ async function getRTCStats(statsObject) {
         }
     });
 
-    let lfHei = mediaStreamTrack_local_videoArray[0].frameHeight;
-    let lfWid = mediaStreamTrack_local_videoArray[0].frameWidth;
-    let lfSen = mediaStreamTrack_local_videoArray[0].framesSent;
-    let rfHei = mediaStreamTrack_remote_videoArray[0].frameHeight;
-    let rfWid = mediaStreamTrack_remote_videoArray[0].frameWidth;
-    let rfRec = mediaStreamTrack_remote_videoArray[0].framesReceived;
+    //力技　先に0で宣言しといて，tryで代入失敗したら無視する
+    let lfHei = 0;
+    let lfWid = 0;
+    let lfSen = 0;
+    let rfHei = 0;
+    let rfWid = 0;
+    let rfRec = 0;
+
+    try {
+        lfHei = mediaStreamTrack_local_videoArray[0].frameHeight;
+        lfWid = mediaStreamTrack_local_videoArray[0].frameWidth;
+        lfSen = mediaStreamTrack_local_videoArray[0].framesSent;
+    } catch (e) {} 
+    try {
+        rfHei = mediaStreamTrack_remote_videoArray[0].frameHeight;
+        rfWid = mediaStreamTrack_remote_videoArray[0].frameWidth;
+        rfRec = mediaStreamTrack_remote_videoArray[0].framesReceived;
+    } catch (e) {} 
 
     $('#local-video').text('frameHeight:' + lfHei
                             + ' frameWidth:' + lfWid
