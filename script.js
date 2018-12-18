@@ -279,7 +279,7 @@ $('#stop-acquiring-stats').on('click', () => {
     clearInterval(timer);
 
     let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);                       //文字コードをBOM付きUTF-8に指定
-    let statsBrob = new blob([bom, data_csv], { "type": "text/csv" });  //data_csvのデータをcsvとしてダウンロードする関数
+    let statsBrob = new Blob([bom, data_csv], { "type": "text/csv" });  //data_csvのデータをcsvとしてダウンロードする関数
     let anchor = $('#downloadlink-stats').get(0);
     anchor.text = 'Download Stats';
     anchor.download = 'stats.csv';
@@ -315,6 +315,7 @@ async function getRTCStats(statsObject) {
     let outboundAudioCode = {};
     let outboundVideoCode = {};
 
+    let stats = await statsObject;
     stats.forEach(stat => {
     if (stat.id.indexOf('RTCTransport') !== -1) {
         trasportArray.push(stat);
@@ -367,7 +368,6 @@ async function getRTCStats(statsObject) {
             remoteCandidate = candidate;
         }
     });
-
     inboundRTPAudioStreamArray.forEach(inboundRTPAudioStream => {
         codecArray.forEach(codec => {
             if (inboundRTPAudioStream.codecId === codec.id) {
