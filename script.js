@@ -411,20 +411,27 @@ async function getRTCStats(statsObject) {
         }
     });
 
-    $('#local-video').text('frameHeight:' + mediaStreamTrack_local_videoArray[0].frameHeight
-                            + ' frameWidth:' + mediaStreamTrack_local_videoArray[0].frameWidth
-                            + ' framesSent:' + mediaStreamTrack_local_videoArray[0].framesSent);
-    $('#remote-video').text('frameHeight:' + mediaStreamTrack_remote_videoArray[0].frameHeight
-                             + ' frameWidth:' + mediaStreamTrack_remote_videoArray[0].frameWidth
-                             + ' framesReceived:' + mediaStreamTrack_remote_videoArray[0].framesReceived);
+    let lfHei = mediaStreamTrack_local_videoArray[0].frameHeight;
+    let lfWid = mediaStreamTrack_local_videoArray[0].frameWidth;
+    let lfSen = mediaStreamTrack_local_videoArray[0].framesSent;
+    let rfHei = mediaStreamTrack_remote_videoArray[0].frameHeight;
+    let rfWid = mediaStreamTrack_remote_videoArray[0].frameWidth;
+    let rfRec = mediaStreamTrack_remote_videoArray[0].framesReceived;
+
+    $('#local-video').text('frameHeight:' + lfHei
+                            + ' frameWidth:' + lfWid
+                            + ' framesSent:' + lfSen);
+    $('#remote-video').text('frameHeight:' + rfHei
+                             + ' frameWidth:' + rfWid
+                             + ' framesReceived:' + rfWid);
 
     data_csv += statsCount * STATS_INTERVAL + ','
-        + mediaStreamTrack_local_videoArray[0].frameHeight + ','
-        + mediaStreamTrack_local_videoArray[0].frameWidth + ','
-        + mediaStreamTrack_local_videoArray[0].framesSent + ','
-        + mediaStreamTrack_remote_videoArray[0].frameHeight + ','
-        + mediaStreamTrack_remote_videoArray[0].frameWidth + ','
-        + mediaStreamTrack_remote_videoArray[0].framesReceived + "\n";
+        + lfHei + ','
+        + lfWid + ','
+        + lfSen + ','
+        + rfHei + ','
+        + rfWid + ','
+        + rfRec + "\n";
 
     statsCount++;
 }
