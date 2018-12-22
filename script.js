@@ -435,7 +435,7 @@ async function getRTCStats(statsObject) {
                             + ' framesSent:' + lfSen);
     $('#remote-video').text('frameHeight:' + rfHei
                              + ' frameWidth:' + rfWid
-                             + ' framesReceived:' + rfWid);
+                             + ' framesReceived:' + rfRec);
 
     data_csv += statsCount * STATS_INTERVAL + ','
         + lfHei + ','
